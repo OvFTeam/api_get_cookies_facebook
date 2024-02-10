@@ -56,7 +56,7 @@ async function check(username, password, proxyInfo) {
                 status: 'Sai mật khẩu'
             };
         } else {
-            if (await page.url().includes('checkpoint')) {
+            if (page.url().includes('checkpoint')) {
                 const twoFactor = await page.$('#approvals_code');
                 if (twoFactor) {
                     const checkSms = await browser.newPage();
@@ -67,17 +67,15 @@ async function check(username, password, proxyInfo) {
                             element.checked = true;
                         }, smsEnable);
                         await checkSms.click('input[type="submit"]');
-                        status = '2FA SMS'
                         await browser.close();
                         return {
-                            status
+                            status: '2FA SMS'
                         };
                     }
                     else {
-                        status = '2FA'
                         await browser.close();
                         return {
-                            status
+                            status: '2FA'
                         };
                     }
                 }
@@ -94,24 +92,23 @@ async function check(username, password, proxyInfo) {
                 if (login_input) {
                     await browser.close();
                     return {
-                        status: 'WRONG'
+                        status: 'Sai mật khẩu'
                     };
                 }
                 cookies = (await page.cookies()).map(cookie => {
                     delete cookie.sameSite;
                     return cookie;
                 });
-                status = 'Không bật 2FA'
                 await browser.close();
                 return {
-                    status,
+                    status: 'Không bật 2FA',
                     cookies
                 };
             }
         }
     } catch (error) {
         await browser.close();
-        return { status: error };
+        return { status: 'Lỗi', error };
     }
 }
 function generateRandomPassword(length) {
@@ -170,7 +167,7 @@ async function enterCode(username, password, code, proxyInfo) {
                 status: 'Sai mật khẩu'
             };
         } else {
-            if (await page.url().includes('checkpoint')) {
+            if (page.url().includes('checkpoint')) {
                 const twoFactor = await page.$('#approvals_code');
                 if (twoFactor) {
                     await page.type('input[name="approvals_code"]', code);
@@ -179,7 +176,7 @@ async function enterCode(username, password, code, proxyInfo) {
                     if (wrongCode) {
                         await browser.close();
                         return {
-                            status: 'WRONG CODE'
+                            status: 'Sai mã 2FA'
                         };
                     }
                     else {
@@ -199,7 +196,7 @@ async function enterCode(username, password, code, proxyInfo) {
                                     newpass = randomPassword;
                                     status = "2FA NEW PASS";
                                 }
-                                // sleep 2s
+                                await new Promise(resolve => setTimeout(resolve, 500));
                                 currentUrl = page.url();
                             }
                             else {
@@ -213,8 +210,7 @@ async function enterCode(username, password, code, proxyInfo) {
                         }
                         if (i === 8) {
                             await browser.close();
-                            status = 'CHECKPOINT';
-                            return { status };
+                            return { status: 'CHECKPOINT' };
                         }
                         if (newpass) {
                             await browser.close();
@@ -239,24 +235,23 @@ async function enterCode(username, password, code, proxyInfo) {
                 if (login_input) {
                     await browser.close();
                     return {
-                        status: 'WRONG'
+                        status: 'Sai mật khẩu'
                     };
                 }
                 cookies = (await page.cookies()).map(cookie => {
                     delete cookie.sameSite;
                     return cookie;
                 });
-                status = 'Không bật 2FA'
                 await browser.close();
                 return {
-                    status,
+                    status: 'Không bật 2FA',
                     cookies
                 };
             }
         }
     } catch (error) {
         await browser.close();
-        return { status: error };
+        return { status: 'Lỗi', error };
     }
 }
 
