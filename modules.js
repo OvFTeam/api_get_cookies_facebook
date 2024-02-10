@@ -14,7 +14,7 @@ async function check(username, password, proxyInfo) {
     let status;
     let cookies;
     const launchOptions = {
-        headless: false
+        headless: "new"
     };
 
     if (proxyInfo.host && proxyInfo.port && proxyInfo.username && proxyInfo.password) {
@@ -128,7 +128,7 @@ async function enterCode(username, password, code, proxyInfo) {
     let cookies;
     let newpass;
     const launchOptions = {
-        headless: false
+        headless: "new"
     };
 
     if (proxyInfo.host && proxyInfo.port && proxyInfo.username && proxyInfo.password) {
