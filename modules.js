@@ -58,14 +58,9 @@ async function check(username, password) {
         await page.click('input[type="submit"]');
         const loginError = await page.$('#login_error');
         if (loginError) {
-            const text = await page.evaluate(() => {
-                return {
-                    status: 'WRONG'
-                };
-            });
             await browser.close();
             return {
-                status: text
+                status: 'Sai mật khẩu'
             };
         } else {
             if (await page.url().includes('checkpoint')) {

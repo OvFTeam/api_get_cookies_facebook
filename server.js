@@ -9,8 +9,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/check', async (req, res) => {
-    const { username, password, ip, port, usernameProxy, passwordProxy } = req.body;
+app.get('/check', async (req, res) => {
+    const { username, password, ip, port, usernameProxy, passwordProxy } = req.query;
     try {
         await getConfigInfo(ip, port, usernameProxy, passwordProxy);
         await initialize();
@@ -21,8 +21,8 @@ app.post('/check', async (req, res) => {
     }
 });
 
-app.post('/code', async (req, res) => {
-    const { code } = req.body;
+app.get('/code', async (req, res) => {
+    const { code } = req.query;
     try {
         const result = await enterCode(code);
         res.send(result);

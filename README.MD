@@ -1,6 +1,6 @@
 # API Documentation 📚
 
-This document outlines the usage of the API provided by the application. 🚀
+This document provides comprehensive instructions on how to utilize the API provided by the application. 🚀
 
 ## Installation and Setup ⚙️
 
@@ -26,22 +26,24 @@ This document outlines the usage of the API provided by the application. 🚀
 
 ### 1. Check Account Status ✅
 
-**Endpoint:** POST `/check`
+**Endpoint:** GET `/check`
 
-**Description**: Checks the status of a Facebook account. 📲
+**Description**: This endpoint is used to check the status of a Facebook account. 📲
 
-Request Body:
+- **Query Parameters**:
 
-```json
-{
-    "username": "<example@example.com>",
-    "password": "examplePassword",
-    "ip": "proxy_ip",
-    "port": "proxy_port",
-    "usernameProxy": "proxy_username",
-    "passwordProxy": "proxy_password"
-}
-```
+  - `username`: Facebook username/email
+  - `password`: Facebook password
+  - `ip` (optional): Proxy IP address
+  - `port` (optional): Proxy port
+  - `usernameProxy` (optional): Proxy username
+  - `passwordProxy` (optional): Proxy password
+
+- **Example Request:**
+
+    ```bash
+    GET /check?username=johndoe&password=pa55w0rd&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword
+    ```
 
 Response:
 
@@ -49,7 +51,7 @@ Response:
 
     ```json
     {
-        "status": "Không bật 2FA",
+        "status": "2FA is not enabled",
         "cookies": ["cookie1", "cookie2", ...]
     }
     ```
@@ -72,17 +74,18 @@ Response:
 
 ### 2. Enter Verification Code ✉️
 
-**Endpoint:** POST `/code`
+**Endpoint:** GET `/code`
 
-**Description:** Enters the verification code for two-factor authentication. 🔐
+**Description:** This endpoint is used to enter the verification code for two-factor authentication. 🔐
 
-Request Body:
+- **Query Parameters**:
+  - `code` (string): The code to enter.
 
-```json
-{
-    "code": "verification_code"
-}
-```
+- **Example Request**:
+
+    ```bash
+    GET /code?code=123456
+    ```
 
 Response:
 
