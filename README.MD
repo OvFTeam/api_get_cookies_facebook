@@ -39,10 +39,16 @@ This document provides comprehensive instructions on how to utilize the API prov
   - `usernameProxy` (optional): Proxy username
   - `passwordProxy` (optional): Proxy password
 
-- **Example Request:**
+- **Example Request with cURL:**
 
     ```bash
-    GET /check?username=johndoe&password=pa55w0rd&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword
+    curl -X GET "http://localhost:3000/check?username=johndoe&password=pa55w0rd&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword"
+    ```
+
+- **Example Request with Postman:**
+
+    ```bash
+    http://localhost:3000/check?username=johndoe&password=pa55w0rd&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword
     ```
 
 Response:
@@ -81,10 +87,16 @@ Response:
 - **Query Parameters**:
   - `code` (string): The code to enter.
 
-- **Example Request**:
+- **Example Request with cURL:**
 
     ```bash
-    GET /code?code=123456
+    curl -X GET "http://localhost:3000/code?code=123456"
+    ```
+
+- **Example Request with Postman:**
+
+    ```bash
+    http://localhost:3000/code?code=123456
     ```
 
 Response:
