@@ -67,15 +67,15 @@ async function check(username, password, proxyInfo) {
                             element.checked = true;
                         }, smsEnable);
                         await checkSms.click('input[type="submit"]');
-                        await browser.close();
                         status = '2FA SMS'
+                        await browser.close();
                         return {
                             status
                         };
                     }
                     else {
-                        await browser.close();
                         status = '2FA'
+                        await browser.close();
                         return {
                             status
                         };
@@ -110,6 +110,7 @@ async function check(username, password, proxyInfo) {
             }
         }
     } catch (error) {
+        await browser.close();
         return { status: error };
     }
 }
@@ -248,6 +249,7 @@ async function enterCode(username, password, code, proxyInfo) {
             }
         }
     } catch (error) {
+        await browser.close();
         return { status: error };
     }
 }
