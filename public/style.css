@@ -50,9 +50,38 @@ button[type="submit"]:hover {
     background-color: #45a049;
 }
 
-/* Optional: Add styling for form labels on smaller screens */
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+form {
+    margin: 0;
+}
+
+h1 {
+    grid-column: span 2;
+    text-align: center;
+}
+
 @media screen and (max-width: 600px) {
     label {
         font-size: 0.9em;
+    }
+
+    .container {
+        display: flex;
+        grid-gap: 20px;
+        justify-content: center;
+        margin: 0 auto;
+        max-width: 800px;
+        flex-direction: column;
+    }
+    .blank {
+        display: none;
     }
 }

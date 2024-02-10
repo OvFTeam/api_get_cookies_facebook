@@ -7,26 +7,7 @@
         <title>API Demo</title>
         <link rel="stylesheet" href="style.css">
         <style>
-            .container {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-gap: 20px;
-                justify-content: center;
-                /* Canh giữa theo chiều ngang */
-                margin: 0 auto;
-                /* Đảm bảo cột nằm ở giữa theo chiều ngang */
-                max-width: 800px;
-                /* Giới hạn chiều rộng tối đa để tránh cột quá rộng */
-            }
 
-            form {
-                margin: 0;
-            }
-
-            h1 {
-                grid-column: span 2;
-                text-align: center;
-            }
         </style>
     </head>
 
@@ -52,6 +33,9 @@
 
                 <label for="proxyPassword">Proxy Password:</label>
                 <input type="password" id="proxyPassword" name="proxyPassword"><br>
+
+                <label class="blank" for="Blank"> -</label>
+                <input class="blank" type="text" placeholder="Ô này thêm zô cho cân =)))" disabled><br>
 
                 <button type="submit" formaction="/check">Check</button>
             </form>
