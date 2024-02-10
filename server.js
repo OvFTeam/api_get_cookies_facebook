@@ -1,37 +1,44 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+const { check, enterCode, getConfigInfo } = require('./modules');
+
 const app = express();
 const port = 3000;
-const server = require('http').Server(app);
-const { initialize, check, enterCode, updateAndSync, saveInfo, close, getConfigInfo } = require('./modules');
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
+
+app.set('views', __dirname + '/views');
+
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
 
 app.get('/check', async (req, res) => {
-    const { username, password, ip, port, usernameProxy, passwordProxy } = req.query;
+    const { username, password, ip, port, proxyUsername, proxyPassword } = req.query;
+    const proxyInfo = getConfigInfo(ip, port, proxyUsername, proxyPassword);
+
     try {
-        await getConfigInfo(ip, port, usernameProxy, passwordProxy);
-        await initialize();
-        const result = await check(username, password);
-        res.send(result);
+        const result = await check(username, password, proxyInfo);
+        res.json(result);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/code', async (req, res) => {
-    const { code } = req.query;
+app.get('/2fa', async (req, res) => {
+    const { username, password, code, ip, port, proxyUsername, proxyPassword } = req.query;
+    const proxyInfo = getConfigInfo(ip, port, proxyUsername, proxyPassword);
+
     try {
-        const result = await enterCode(code);
-        res.send(result);
+        const result = await enterCode(username, password, code, proxyInfo);
+        res.json(result);
     } catch (error) {
-        await close();
-        res.status(500).send(error);
+        res.status(500).json({ error: error.message });
     }
 });
 
-server.listen(port, () => {
-    console.log(`Server listening at port:${port}`);
+app.listen(port, () => {
+    console.log(`Server is listening on port:${port}`);
 });

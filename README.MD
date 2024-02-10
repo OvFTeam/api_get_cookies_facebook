@@ -85,18 +85,24 @@ Response:
 **Description:** This endpoint is used to enter the verification code for two-factor authentication. 🔐
 
 - **Query Parameters**:
+  - `username`: Facebook username/email
+  - `password`: Facebook password
   - `code` (string): The code to enter.
+  - `ip` (optional): Proxy IP address
+  - `port` (optional): Proxy port
+  - `usernameProxy` (optional): Proxy username
+  - `passwordProxy` (optional): Proxy password
 
 - **Example Request with cURL:**
 
     ```bash
-    curl -X GET "http://localhost:3000/code?code=123456"
+    curl -X GET "http://localhost:3000/code?username=johndoe&password=pa55w0rd&code=123456&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword"
     ```
 
 - **Example Request with Postman:**
 
     ```bash
-    http://localhost:3000/code?code=123456
+    http://localhost:3000/code?username=johndoe&password=pa55w0rd&code=123456&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword
     ```
 
 Response:
