@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn
+After=network.target
+
+[Service]
+User=admin
+Group=admin
+WorkingDirectory=/home/admin/api_get_cookies_facebook
+ExecStart=/home/admin/.local/bin/gunicorn -b 0.0.0.0:5000 server:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
