@@ -11,6 +11,7 @@ wget -N https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.8
 sudo dpkg -i ~/google-chrome-stable_current_amd64.deb
 unzip ~/chromedriver_linux64.zip -d ~/
 sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+sudo chown admin:admin /usr/local/bin/chromedriver
 sudo chmod 0755 /usr/local/bin/chromedriver
 
 rm ~/google-chrome-stable_current_amd64.deb
