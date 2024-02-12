@@ -11,6 +11,7 @@ def check_status_facebook(username, password, code):
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-features=SameSiteByDefaultCookies')
     driver = webdriver.Chrome(options=options)
     driver.get('https://mbasic.facebook.com/')
     driver.find_element(By.ID, 'm_login_email').send_keys(username)
@@ -50,7 +51,11 @@ def check_status_facebook(username, password, code):
                                 break
                         else:
                             break
-                    return '2FA', driver.get_cookies()
+                    cookies = driver.get_cookies()
+                    for cookie in cookies:
+                        if 'sameSite' in cookie:
+                            del cookie['sameSite']
+                    return '2FA', cookies
                 else:
                     if approvals_code:
                         return '2FA', None
@@ -63,4 +68,8 @@ def check_status_facebook(username, password, code):
                 if email:
                     return 'Sai mat khau'
             except:
-                return 'Khong bat 2FA', driver.get_cookies()
+                cookies = driver.get_cookies()
+                for cookie in cookies:
+                    if 'sameSite' in cookie:
+                        del cookie['sameSite']
+                return 'Khong bat 2FA', cookies
