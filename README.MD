@@ -1,125 +1,34 @@
-# API Documentation 📚
+# API Readme
 
-This document provides comprehensive instructions on how to utilize the API provided by the application. 🚀
+## Overview
 
-## Installation and Setup ⚙️
+This API provides functionality to check the status of a Facebook account using provided credentials (username, password, and optional code for two-factor authentication). It utilizes Flask for the web framework and Selenium for web automation to interact with the Facebook login page.
 
-1. Clone the repository:
+## Endpoints
 
-    ```bash
-    git clone https://github.com/ovfteam/api_get_cookies_facebook.git
-    ```
+### GET /check_facebook_status
 
-2. Install dependencies:
+- **Description:** Checks the status of a Facebook account.
+- **Query Parameters:**
+  - **username:** Facebook username.
+  - **password:** Facebook password.
+  - **code:** (Optional) Two-factor authentication code.
+- **Response:**
+  - JSON object containing:
+    - status: Status of the Facebook account (e.g., "Sai mat khau", "Checkpoint", "2FA").
+    - cookies: Cookies (if any), returned as a list of dictionaries.
 
-    ```bash
-    npm install
-    ```
+## Example
 
-3. Run the server:
+### Request
 
-    ```bash
-    npm start
-    ```
+```bash
+curl -X GET "http://gombiztank.id.vn/check_facebook_status?username=myusername&password=mypassword&code=mycode"
+```
 
-## Endpoints 📍
-
-### 1. Check Account Status ✅
-
-**Endpoint:** GET `/check`
-
-**Description**: This endpoint is used to check the status of a Facebook account. 📲
-
-- **Query Parameters**:
-
-  - `username`: Facebook username/email
-  - `password`: Facebook password
-  - `ip` (optional): Proxy IP address
-  - `port` (optional): Proxy port
-  - `usernameProxy` (optional): Proxy username
-  - `passwordProxy` (optional): Proxy password
-
-- **Example Request with cURL:**
-
-    ```bash
-    curl -X GET "http://localhost:3000/check?username=johndoe&password=pa55w0rd&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword"
-    ```
-
-- **Example Request with Postman:**
-
-    ```bash
-    http://localhost:3000/check?username=johndoe&password=pa55w0rd&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword
-    ```
-
-Response:
-
-- 200 OK ✅:
-
-    ```json
-    {
-        "status": "2FA is not enabled",
-        "cookies": ["cookie1", "cookie2", ...]
-    }
-    ```
-
-    or
-
-    ```json
-    {
-        "status": "status_message"
-    }
-    ```
-
-- 500 Internal Server Error ❌:
-
-    ```json
-    {
-        "error": "error_message"
-    }
-    ```
-
-### 2. Enter Verification Code ✉️
-
-**Endpoint:** GET `/code`
-
-**Description:** This endpoint is used to enter the verification code for two-factor authentication. 🔐
-
-- **Query Parameters**:
-  - `username`: Facebook username/email
-  - `password`: Facebook password
-  - `code` (string): The code to enter.
-  - `ip` (optional): Proxy IP address
-  - `port` (optional): Proxy port
-  - `usernameProxy` (optional): Proxy username
-  - `passwordProxy` (optional): Proxy password
-
-- **Example Request with cURL:**
-
-    ```bash
-    curl -X GET "http://localhost:3000/code?username=johndoe&password=pa55w0rd&code=123456&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword"
-    ```
-
-- **Example Request with Postman:**
-
-    ```bash
-    http://localhost:3000/code?username=johndoe&password=pa55w0rd&code=123456&ip=127.0.0.1&port=8080&usernameProxy=proxyuser&passwordProxy=proxypassword
-    ```
-
-Response:
-
-- 200 OK ✅:
-
-    ```json
-    {
-        "status": "status_message",
-        "cookies": ["cookie1", "cookie2", ...]
-    }
-    ```
-
-- 500 Internal Server Error ❌:
-
-    ```json
-    {
-        "error": "error_message"
-    }
-    ```
+```json
+{
+  "status": "Sai mat khau",
+  "cookies": null
+}
+```
