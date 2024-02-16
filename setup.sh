@@ -14,13 +14,14 @@ sudo systemctl start gunicorn
 sudo systemctl enable gunicorn
 
 wget -N https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/
-wget -N https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip -P ~/
+wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/121.0.6167.85/linux64/chromedriver-linux64.zip
 
 sudo dpkg -i ~/google-chrome-stable_current_amd64.deb
-unzip ~/chromedriver_linux64.zip -d ~/
-sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+unzip chromedriver_linux64.zip
+sudo mv -f chromedriver_linux64/chromedriver /usr/local/bin/
 sudo chown admin:admin /usr/local/bin/chromedriver
 sudo chmod 0755 /usr/local/bin/chromedriver
 
 rm ~/google-chrome-stable_current_amd64.deb
-rm ~/chromedriver-linux64.zip
+rm chromedriver-linux64.zip
+rm -rf chromedriver-linux64
